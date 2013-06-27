@@ -4,18 +4,18 @@ package test_heap_intramethod;
 // Simple propagation / statement reduction
 //
 scenario HeapObjectResidualization {
-	?Box@0 a;
-	?a = ?new Box@0(dynamic(int,input));
+	?Box@1 a;
+	?a = ?new Box@1(dynamic(int,input));
 	?int b;
 	?b = ?a.value;
 } assert {
-	Box@0 a; a = new Box@0(dynamic(int,input));
+	Box@1 a; a = new Box@1(dynamic(int,input));
 	int b; b = a.value;
 }
 
 scenario HeapSimplePropagation {
-	$Box@1 a;
-	$a = $new Box@1(87);
+	$Box@2 a;
+	$a = $new Box@2(87);
 	?int b;
 	?b = lift($a.value);
 } assert {
@@ -25,11 +25,11 @@ scenario HeapSimplePropagation {
 //
 // Heap values
 // 
-class Box@0 extends Object {
+class Box@1 extends Object {
 	int value;
 }
 
-class Box@1 extends Object {
+class Box@2 extends Object {
 	$int value;
 }
 

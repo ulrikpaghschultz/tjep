@@ -24,7 +24,7 @@ public class EnvHeap {
 
 	public Value lookupObjectField(ObjectValue object, String fieldName) {
 		TField field = context.program().findField(object.getTypeName(),fieldName);
-		if(!(field.getBT()==BT.S)) throw new Error("Read of non-static field");
+		if(!(field.getBT()==BT.S)) throw new Error("Read of non-static field "+object.getTypeName()+"."+fieldName);
 		return object.getField(field);
 	}
 

@@ -165,6 +165,16 @@ public class JavaInstantiator {
     return _builder;
   }
   
+  public String outputName(final String name, final Integer variant) {
+    boolean _equals = ((variant).intValue() == 0);
+    if (_equals) {
+      return name;
+    } else {
+      String _plus = (name + "@");
+      return (_plus + variant);
+    }
+  }
+  
   protected CharSequence _outputBT(final Static b) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("BT.S");
@@ -245,7 +255,9 @@ public class JavaInstantiator {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("new TClass(\"");
     String _name = c.getName();
-    _builder.append(_name, "");
+    int _variant = c.getVariant();
+    String _outputName = this.outputName(_name, Integer.valueOf(_variant));
+    _builder.append(_outputName, "");
     _builder.append("\",\"");
     Clazz _base = c.getBase();
     String _name_1 = _base.getName();
@@ -309,7 +321,9 @@ public class JavaInstantiator {
     _builder.append(_name, "");
     _builder.append("\",\"");
     String _name_1 = m.getName();
-    _builder.append(_name_1, "");
+    int _variant = m.getVariant();
+    String _outputName = this.outputName(_name_1, Integer.valueOf(_variant));
+    _builder.append(_outputName, "");
     _builder.append("\",");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -420,7 +434,9 @@ public class JavaInstantiator {
     _builder.append(",\"");
     Type _type = v.getType();
     String _name = _type.getName();
-    _builder.append(_name, "");
+    int _variant = v.getVariant();
+    String _outputName = this.outputName(_name, Integer.valueOf(_variant));
+    _builder.append(_outputName, "");
     _builder.append("\",\"");
     String _name_1 = v.getName();
     _builder.append(_name_1, "");
@@ -708,7 +724,9 @@ public class JavaInstantiator {
     _builder.append(",\"");
     Clazz _type = i.getType();
     String _name = _type.getName();
-    _builder.append(_name, "");
+    int _variant = i.getVariant();
+    String _outputName = this.outputName(_name, Integer.valueOf(_variant));
+    _builder.append(_outputName, "");
     _builder.append("\",");
     EList<Expr> _argument = i.getArgument();
     CharSequence _output = this.output(_argument);

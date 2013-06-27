@@ -70,6 +70,15 @@ class JavaInstantiator {
 	}
   	'''
   	
+  	// Misc helpers
+  	
+  	def String outputName(String name, Integer variant) { 
+  		if(variant==0)
+  			return name
+  		else
+  			return name+"@"+variant
+  	}
+
   	// Binding time annotations
   	
   	def dispatch outputBT(Static b) '''BT.S'''
@@ -91,7 +100,7 @@ class JavaInstantiator {
   	'''
   	
   	def dispatch output(Clazz c) '''
-  	new TClass("«c.name»","«c.base.name»",new TMember[] {
+  	new TClass("«outputName(c.name,c.variant)»","«c.base.name»",new TMember[] {
   		«FOR m:c.members SEPARATOR ','»
   		«m.output»
   		«ENDFOR»
@@ -105,7 +114,7 @@ class JavaInstantiator {
   	'''
   	
   	def dispatch output(Method m) '''
-	new TMethod(«m.outputBT»,"«m.type.name»","«m.name»",
+	new TMethod(«m.outputBT»,"«m.type.name»","«outputName(m.name,m.variant)»",
 		new TParameter[] { «FOR p:m.params SEPARATOR ','»«p.output»«ENDFOR» },
 		new TStatement[] {
   			«FOR s:m.body SEPARATOR ','»
@@ -129,7 +138,7 @@ class JavaInstantiator {
   	// Statements
 
 	def dispatch output(VarDecl v) '''
-	new TVarDecl(«v.outputBT»,"«v.type.name»","«v.name»")
+	new TVarDecl(«v.outputBT»,"«outputName(v.type.name,v.variant)»","«v.name»")
 	'''
 	
 	def dispatch output(LocalAssign a) '''
@@ -186,7 +195,7 @@ class JavaInstantiator {
 
 	def dispatch outputAE(ObjectOp o,BT b) '''new TFieldRef(«b.outputBT»,«IF o.object!=null»"«o.object»"«ELSE»new TThis(«b.outputBT»)«ENDIF»,"«o.name»")'''
 
-	def dispatch outputAE(Instantiation i,BT b) '''new TNew(«b.outputBT»,"«i.type.name»",«i.argument.output»)'''
+	def dispatch outputAE(Instantiation i,BT b) '''new TNew(«b.outputBT»,"«outputName(i.type.name,i.variant)»",«i.argument.output»)'''
 	
 	def dispatch CharSequence outputAE(AnnotatedExpr e,BT b) { return e.exp.outputAE(e.bt) }
 
