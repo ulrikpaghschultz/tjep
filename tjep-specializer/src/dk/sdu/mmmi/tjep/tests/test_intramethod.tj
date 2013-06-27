@@ -1,0 +1,189 @@
+package test_intramethod;
+
+//
+// Simple propagation / statement reduction
+//
+scenario OneAddition {
+	int a;
+	a = 1+2;
+	int b;
+	b = lift(1$+2);
+} assert {
+	int a;
+	a = 1+2;
+	int b;
+	b = 3;
+}
+
+scenario Propagation {
+	$int a;
+	$a = 1 $+ 2;
+	$int b;
+	$b = 3 $+ 5;
+	$int c;
+	?c = lift($a $+ $b);
+} assert {
+	c = 11;
+}
+
+//
+// Loops
+//
+scenario StaticLoop {
+	?int base; ?base = dynamic(int,baseValue);
+	$int exp; $exp = 3;
+	?int res;
+	?res = lift(1);
+	$while($exp$>0) {
+		?res = res ?* base;
+		$exp = $exp $- 1;
+	}
+} assert {
+	int base; base = dynamic(int,baseValue);
+	int res; res = 1;
+	res = res*base;
+	res = res*base;
+	res = res*base;
+}
+
+scenario StaticLoopWithVar {
+	?int base; ?base = dynamic(int,baseValue);
+	$int exp; $exp = 3;
+	?int res;
+	?res = lift(1);
+	$while($exp$>0) {
+		?int tmp; ?tmp = ?res ?* ?base;
+		?res = ?tmp ?+ (lift($exp));
+		$exp = $exp $- 1;
+	}
+} assert {
+	int base; base = dynamic(int,baseValue);
+	int res; res = 1;
+	int tmp;
+	tmp = res*base;
+	res = tmp+3;
+	tmp = res*base;
+	res = tmp+2;
+	tmp = res*base;
+	res = tmp+1;
+}
+
+scenario DynamicLoop {
+	?int bound; ?bound = dynamic(int,loopBound);
+	?while(bound?>0) {
+		$int loc; $loc = 5;
+		$loc = $loc $* $loc;
+		?bound = ?bound ?- (lift($loc));
+	}
+} assert {
+	int bound; bound = dynamic(int,loopBound);
+	while(bound>0) {
+		bound = bound - 25;
+	}
+}
+
+//
+// Conditionals
+//
+
+scenario StaticConditional {
+	$int x; $x = 1;
+	?int y;
+	$if($x) {
+		?y = lift(2);
+	} else {
+		?y = lift(3);
+	}
+} assert {
+	int y;
+	y = 2;
+}
+
+scenario NestedStaticConditional {
+	$int x; $x = 1;
+	?int y;
+	$if($x) {
+		$if($x $== 87) {
+			?y = lift(2);
+		} else {
+			?y = lift(3);
+		}
+	} else {
+		?y = lift(4);
+	}
+} assert {
+	int y;
+	y = 3;
+}
+
+scenario SimpleDynamicConditional {
+	$int x; $x = 1;
+	?int y; ?y = dynamic(int,input);
+	?if(?y) {
+		?y = lift($x$+1);
+		$x = $x $+ 10;
+	} else {
+		?y = lift($x$+2);
+		$x = $x $+ 20;
+	}
+} assert {
+	int y; y = dynamic(int,input);
+	if(y) {
+		y = 2;
+	} else {
+		y = 3;
+	}
+}
+
+scenario NestedDynamicConditional {
+	$int x; $x = 1;
+	?int y; ?y = dynamic(int,input1);
+	?int z; ?z = dynamic(int,input2);
+	?if(?y) {
+		?if(?z) {
+			?y = lift($x$+1);
+			$x = $x $+ 10;
+			?z = lift($x$+$x);
+		} else {
+			?y = lift($x$+2);
+			$x = $x $+ 20;
+			?z = lift($x$+$x);
+		}
+	} else {
+		?if(?z) {
+			?y = lift($x$+3);
+			$x = $x $+ 30;
+			?z = lift($x$+$x);
+		} else {
+			?y = lift($x$+4);
+			$x = $x $+ 40;
+			?z = lift($x$+$x);
+		}
+	}
+} assert {
+	int y; y = dynamic(int,input1);
+	int z; z = dynamic(int,input2);
+	if(y) {
+		if(z) {
+			y = 2;
+			z = 22;
+		} else {
+			y = 3;
+			z = 42;
+		}
+	} else {
+		if(z) {
+			y = 4;
+			z = 62;
+		} else {
+			y = 5;
+			z = 82;
+		}
+	}
+}
+
+//
+// Auxiliary declarations
+//
+
+primitive int;
