@@ -1,0 +1,37 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: dk.sdu.mmmi.tjep
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0
+Bundle-SymbolicName: dk.sdu.mmmi.tjep; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0";visibility:=reexport,
+ org.eclipse.xtext.xbase;bundle-version="2.1.0";resolution:=optional;visibility:=reexport,
+ org.apache.log4j;bundle-version="1.2.15";visibility:=reexport,
+ org.apache.commons.logging;bundle-version="1.0.4";resolution:=optional;visibility:=reexport,
+ org.eclipse.xtext.generator;resolution:=optional,
+ org.eclipse.emf.codegen.ecore;resolution:=optional,
+ org.eclipse.emf.mwe.utils;resolution:=optional,
+ org.eclipse.emf.mwe2.launch;resolution:=optional,
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.antlr.runtime,
+ org.eclipse.xtext.common.types
+Import-Package: org.apache.log4j,
+ org.apache.commons.logging,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend2.lib
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: dk.sdu.mmmi.tjep,
+ dk.sdu.mmmi.tjep.services,
+ dk.sdu.mmmi.tjep.tJ,
+ dk.sdu.mmmi.tjep.tJ.impl,
+ dk.sdu.mmmi.tjep.tJ.util,
+ dk.sdu.mmmi.tjep.serializer,
+ dk.sdu.mmmi.tjep.parser.antlr,
+ dk.sdu.mmmi.tjep.parser.antlr.internal,
+ dk.sdu.mmmi.tjep.validation,
+ dk.sdu.mmmi.tjep.scoping,
+ dk.sdu.mmmi.tjep.generator,
+ dk.sdu.mmmi.tjep.formatting

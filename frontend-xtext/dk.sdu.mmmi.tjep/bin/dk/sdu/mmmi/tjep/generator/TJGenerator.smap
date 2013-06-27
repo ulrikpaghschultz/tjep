@@ -1,0 +1,17 @@
+SMAP
+TJGenerator.java
+Xtend
+*S Xtend
+*F
++ 0 TJGenerator.xtend
+src/dk/sdu/mmmi/tjep/generator/TJGenerator.xtend
+*L
+17:21,5
+18:26,2
+19:28,2
+20:30
+22:31,8
+20:39
+27:43,3
+29:49,3
+*E

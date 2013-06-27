@@ -1,0 +1,132 @@
+grammar dk.sdu.mmmi.tjep.TJ with org.eclipse.xtext.common.Terminals
+
+generate tJ "http://www.sdu.dk/mmmi/tjep/TJ"
+
+Program:
+	'package' pkgname=ID ';' scenarios+=Scenario* types+=Type*
+;
+
+Scenario:
+	'scenario' name=ID '{' target+=Statement* '}' ( 'assert' '{' assertion+=Statement* '}' )?
+;
+
+BT:
+	{Static} '$' | {Dynamic} '?'
+;
+
+Type:
+	Primitive | Clazz
+;
+
+Primitive:
+	'primitive' name=ID ';'
+;
+
+Clazz:
+	'class' name=ID ('@' variant=INT)? 'extends' base=[Clazz] '{' members+=Member* '}'
+;
+
+Member:
+	Field | Method | Constructor
+;
+
+Field:
+	(bt=BT)? (final?='final')? type=[Type] name=ID ';'
+;
+	
+Method:
+	(bt=BT)? type=[Type] name=ID ('@' variant=INT)? 
+	'(' (params+=Parameter (',' params+=Parameter)*)? ')' '{' body+=Statement* '}'
+;
+		
+Parameter:
+	(bt=BT)? type=[Type] name=ID
+;
+	
+Constructor:
+	(bt=BT)? clazz=[Clazz] '(' (params+=Parameter (',' params+=Parameter)*)? ')' '{' body+=Statement* '}'
+;
+
+Statement:
+	VarDecl | LocalAssign | FieldAssign | Condition | While | Return | SingleExpr
+;
+
+VarDecl:
+	(bt=BT)? type=[Type] ('@' variant=INT)? name=ID ';'
+;
+
+LocalAssign:
+	(bt=BT)? name=ID '=' rhs=Expr ';'
+;
+	
+FieldAssign:
+	(bt=BT)? object=ID '.' name=ID '=' rhs=Expr ';' |
+	(bt=BT)? 'this' '.' name=ID '=' rhs=Expr ';'
+;
+	
+Condition:
+	(bt=BT)? 'if' '(' cond=Expr ')' '{' thenBody+=Statement* '}' 'else' '{' elseBody+=Statement* '}'
+;
+
+While:
+	(bt=BT)? 'while' '(' cond=Expr ')' '{' body+=Statement* '}'
+;
+
+Return:
+	(bt=BT)? 'return' exp=Expr ';'
+;	
+
+SingleExpr:
+	(bt=BT ':')? exp = Expr ';'
+;
+
+Expr:
+	AnnotatedExpr | ArithExp | LiftExp
+;
+
+LiftExp:
+	'lift' exp=Expr
+;
+
+AnnotatedExpr:
+	bt=BT? exp=ObjectOp | {This} bt=BT? 'this' | bt=BT? exp=Instantiation
+;
+
+ObjectOp:
+	object=ID '.' ( '(' qualifier=[Clazz] ')' )? name=ID ('@' variant=INT)?  
+	(=> '(' {MethodCall.target=current} (argument+=Expr (',' argument+=Expr)*)? ')')? |
+	'this' '.' ( '(' qualifier=[Clazz] ')' )? name=ID ('@' variant=INT)?  
+	(=> '(' {MethodCall.target=current} (argument+=Expr (',' argument+=Expr)*)? ')')?
+;
+
+Instantiation:
+	'new' type=[Clazz] ('@' variant=INT)? '(' (argument+=Expr (',' argument+=Expr)*)? ')'
+;
+
+ArithExp:
+	{BinOp} lhs=Addition (op=('<'|'>'|'=='|'$<'|'?<'|'$>'|'?>'|'$=='|'?==') rhs=ArithExp)?
+;	
+
+Addition:
+	{BinOp} lhs=Multiplication (op=('+'|'-'|'$+'|'?+'|'$-'|'?-') rhs=Addition)?
+;
+
+Multiplication:
+	{BinOp} lhs=BaseExp (op=('*'|'/'|'$*'|'?*'|'$/'|'?/') rhs=Multiplication)? | '(' Expr ')'
+;
+
+BaseExp:
+	VarRef | Constant | DynamicValue
+;
+
+VarRef:
+	bt=BT? name=ID
+;
+
+Constant:
+	value=INT
+;
+
+DynamicValue:
+	'dynamic' '(' type=[Type] ',' name=ID ')'
+;

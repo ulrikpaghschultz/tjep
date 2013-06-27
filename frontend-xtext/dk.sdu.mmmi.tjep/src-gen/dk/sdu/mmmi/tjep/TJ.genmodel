@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/dk.sdu.mmmi.tjep/src-gen" editDirectory="/dk.sdu.mmmi.tjep.edit/src"
+    editorDirectory="/dk.sdu.mmmi.tjep.editor/src" modelPluginID="dk.sdu.mmmi.tjep"
+    forceOverwrite="true" modelName="TJ" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="dk.sdu.mmmi.tjep.edit"
+    editorPluginID="dk.sdu.mmmi.tjep.editor" runtimeVersion="2.8">
+  <genPackages prefix="TJ" basePackage="dk.sdu.mmmi.tjep" disposableProviderFactory="true"
+      ecorePackage="TJ.ecore#/">
+    <genClasses ecoreClass="TJ.ecore#//Program">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//Program/pkgname"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Program/scenarios"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Program/types"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//Scenario">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//Scenario/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Scenario/target"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Scenario/assertion"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//BT"/>
+    <genClasses ecoreClass="TJ.ecore#//Type">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//Type/name"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//Primitive"/>
+    <genClasses ecoreClass="TJ.ecore#//Clazz">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//Clazz/variant"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference TJ.ecore#//Clazz/base"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Clazz/members"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//Member">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Member/bt"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//Field">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//Field/final"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference TJ.ecore#//Field/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//Field/name"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//Method">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference TJ.ecore#//Method/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//Method/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//Method/variant"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Method/params"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Method/body"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//Parameter">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Parameter/bt"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference TJ.ecore#//Parameter/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//Parameter/name"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//Constructor">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference TJ.ecore#//Constructor/clazz"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Constructor/params"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Constructor/body"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//Statement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Statement/bt"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//VarDecl">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference TJ.ecore#//VarDecl/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//VarDecl/variant"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//VarDecl/name"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//LocalAssign">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//LocalAssign/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//LocalAssign/rhs"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//FieldAssign">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//FieldAssign/object"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//FieldAssign/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//FieldAssign/rhs"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//Condition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Condition/cond"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Condition/thenBody"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Condition/elseBody"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//While">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//While/cond"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//While/body"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//Return">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Return/exp"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//SingleExpr">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//SingleExpr/exp"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//Expr"/>
+    <genClasses ecoreClass="TJ.ecore#//LiftExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//LiftExp/exp"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//AnnotatedExpr">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//AnnotatedExpr/bt"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//AnnotatedExpr/exp"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//ObjectOp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//ObjectOp/object"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference TJ.ecore#//ObjectOp/qualifier"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//ObjectOp/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//ObjectOp/variant"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//Instantiation">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference TJ.ecore#//Instantiation/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//Instantiation/variant"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//Instantiation/argument"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//ArithExp"/>
+    <genClasses ecoreClass="TJ.ecore#//Addition"/>
+    <genClasses ecoreClass="TJ.ecore#//Multiplication"/>
+    <genClasses ecoreClass="TJ.ecore#//BaseExp"/>
+    <genClasses ecoreClass="TJ.ecore#//VarRef">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//VarRef/bt"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//VarRef/name"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//Constant">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//Constant/value"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//DynamicValue">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference TJ.ecore#//DynamicValue/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//DynamicValue/name"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//Static"/>
+    <genClasses ecoreClass="TJ.ecore#//Dynamic"/>
+    <genClasses ecoreClass="TJ.ecore#//This"/>
+    <genClasses ecoreClass="TJ.ecore#//MethodCall">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//MethodCall/target"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//MethodCall/argument"/>
+    </genClasses>
+    <genClasses ecoreClass="TJ.ecore#//BinOp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//BinOp/lhs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TJ.ecore#//BinOp/op"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TJ.ecore#//BinOp/rhs"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

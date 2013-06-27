@@ -1,0 +1,11 @@
+SMAP
+TestB.java
+Xtend
+*S Xtend
+*F
++ 0 Builder.xtend
+src/dk/sdu/mmmi/tjep/generator/Builder.xtend
+*L
+44:14
+45:15,6
+*E
