@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+    <extension
+            point="org.eclipse.ui.editors">
+        <editor
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            default="true"
+            extensions="tj"
+            id="dk.sdu.mmmi.tjep.TJ"
+            name="TJ Editor">
+        </editor>
+    </extension>
+    <extension
+        point="org.eclipse.ui.handlers">
+        <handler
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
+            <activeWhen>
+                <reference
+                    definitionId="dk.sdu.mmmi.tjep.TJ.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+        <handler
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="dk.sdu.mmmi.tjep.TJ.validate">
+         <activeWhen>
+            <reference
+                    definitionId="dk.sdu.mmmi.tjep.TJ.Editor.opened">
+            </reference>
+         </activeWhen>
+      </handler>
+    </extension>
+    <extension point="org.eclipse.core.expressions.definitions">
+        <definition id="dk.sdu.mmmi.tjep.TJ.Editor.opened">
+            <and>
+                <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
+                <with variable="activeEditor">
+                    <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
+                        value="dk.sdu.mmmi.tjep.TJ" 
+                        forcePluginActivation="true"/>
+                </with>        
+            </and>
+        </definition>
+    </extension>
+    <extension
+            point="org.eclipse.ui.preferencePages">
+        <page
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="dk.sdu.mmmi.tjep.TJ"
+            name="TJ">
+            <keywordReference id="dk.sdu.mmmi.tjep.ui.keyword_TJ"/>
+        </page>
+        <page
+            category="dk.sdu.mmmi.tjep.TJ"
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="dk.sdu.mmmi.tjep.TJ.coloring"
+            name="Syntax Coloring">
+            <keywordReference id="dk.sdu.mmmi.tjep.ui.keyword_TJ"/>
+        </page>
+        <page
+            category="dk.sdu.mmmi.tjep.TJ"
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="dk.sdu.mmmi.tjep.TJ.templates"
+            name="Templates">
+            <keywordReference id="dk.sdu.mmmi.tjep.ui.keyword_TJ"/>
+        </page>
+    </extension>
+    <extension
+            point="org.eclipse.ui.propertyPages">
+        <page
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="dk.sdu.mmmi.tjep.TJ"
+            name="TJ">
+            <keywordReference id="dk.sdu.mmmi.tjep.ui.keyword_TJ"/>
+            <enabledWhen>
+	            <adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+	        <filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
+        </page>
+    </extension>
+    <extension
+        point="org.eclipse.ui.keywords">
+        <keyword
+            id="dk.sdu.mmmi.tjep.ui.keyword_TJ"
+            label="TJ"/>
+    </extension>
+    <extension
+         point="org.eclipse.ui.commands">
+      <command
+            description="Trigger expensive validation"
+            id="dk.sdu.mmmi.tjep.TJ.validate"
+            name="Validate">
+      </command>
+    </extension>
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.edit">
+             <command
+                 commandId="dk.sdu.mmmi.tjep.TJ.validate"
+                 style="push"
+                 tooltip="Trigger expensive validation">
+            <visibleWhen checkEnabled="false">
+                <reference
+                    definitionId="dk.sdu.mmmi.tjep.TJ.Editor.opened">
+                </reference>
+            </visibleWhen>
+         </command>  
+         </menuContribution>
+    </extension>
+    <extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
+			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
+				<visibleWhen checkEnabled="false">
+                	<reference definitionId="dk.sdu.mmmi.tjep.TJ.Editor.opened">
+                	</reference>
+            	</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+	<extension point="org.eclipse.ui.handlers">
+	    <handler
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            commandId="org.eclipse.xtext.ui.editor.FindReferences">
+            <activeWhen>
+                <reference
+                    definitionId="dk.sdu.mmmi.tjep.TJ.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+    </extension>   
+
+<!-- adding resource factories -->
+
+	<extension
+		point="org.eclipse.emf.ecore.extension_parser">
+		<parser
+			class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			type="tj">
+		</parser>
+	</extension>
+	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
+        <resourceServiceProvider
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            uriExtension="tj">
+        </resourceServiceProvider>
+    </extension>
+
+
+    <!-- marker definitions for dk.sdu.mmmi.tjep.TJ -->
+    <extension
+            id="tj.check.fast"
+            name="TJ Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.fast"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="tj.check.normal"
+            name="TJ Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.normal"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="tj.check.expensive"
+            name="TJ Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.expensive"/>
+        <persistent value="true"/>
+    </extension>
+
+   <extension
+         point="org.eclipse.xtext.builder.participant">
+      <participant
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
+      </participant>
+   </extension>
+   <extension
+            point="org.eclipse.ui.preferencePages">
+        <page
+            category="dk.sdu.mmmi.tjep.TJ"
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="dk.sdu.mmmi.tjep.TJ.compiler.preferencePage"
+            name="Compiler">
+            <keywordReference id="dk.sdu.mmmi.tjep.ui.keyword_TJ"/>
+        </page>
+    </extension>
+    <extension
+            point="org.eclipse.ui.propertyPages">
+        <page
+            category="dk.sdu.mmmi.tjep.TJ"
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="dk.sdu.mmmi.tjep.TJ.compiler.propertyPage"
+            name="Compiler">
+            <keywordReference id="dk.sdu.mmmi.tjep.ui.keyword_TJ"/>
+            <enabledWhen>
+	            <adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+	        <filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
+        </page>
+    </extension>
+
+	<!-- Quick Outline -->
+	<extension
+		point="org.eclipse.ui.handlers">
+		<handler 
+			class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
+			<activeWhen>
+				<reference
+					definitionId="dk.sdu.mmmi.tjep.TJ.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
+	</extension>
+	<extension
+		point="org.eclipse.ui.commands">
+		<command
+			description="Open the quick outline."
+			id="org.eclipse.xtext.ui.editor.outline.QuickOutline"
+			name="Quick Outline">
+		</command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution
+			locationURI="popup:#TextEditorContext?after=group.open">
+			<command commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline"
+				style="push"
+				tooltip="Open Quick Outline">
+				<visibleWhen checkEnabled="false">
+					<reference definitionId="dk.sdu.mmmi.tjep.TJ.Editor.opened"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+    <!-- quickfix marker resolution generator for dk.sdu.mmmi.tjep.TJ -->
+    <extension
+            point="org.eclipse.ui.ide.markerResolution">
+        <markerResolutionGenerator
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="dk.sdu.mmmi.tjep.ui.tj.check.fast">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="dk.sdu.mmmi.tjep.ui.tj.check.normal">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="dk.sdu.mmmi.tjep.ui.tj.check.expensive">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+    </extension>
+   	<!-- Rename Refactoring -->
+	<extension point="org.eclipse.ui.handlers">
+		<handler 
+			class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.IRenameElementHandler"
+			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
+			<activeWhen>
+				<reference
+					definitionId="dk.sdu.mmmi.tjep.TJ.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
+	</extension>
+    <extension point="org.eclipse.ui.menus">
+         <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.edit">
+         <command commandId="org.eclipse.xtext.ui.refactoring.RenameElement"
+               style="push">
+            <visibleWhen checkEnabled="false">
+               <reference
+                     definitionId="dk.sdu.mmmi.tjep.TJ.Editor.opened">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension point="org.eclipse.ui.preferencePages">
+	    <page
+	        category="dk.sdu.mmmi.tjep.TJ"
+	        class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+	        id="dk.sdu.mmmi.tjep.TJ.refactoring"
+	        name="Refactoring">
+	        <keywordReference id="dk.sdu.mmmi.tjep.ui.keyword_TJ"/>
+	    </page>
+	</extension>
+
+  <extension point="org.eclipse.compare.contentViewers">
+    <viewer id="dk.sdu.mmmi.tjep.TJ.compare.contentViewers"
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="tj">
+    </viewer>
+  </extension>
+  <extension point="org.eclipse.compare.contentMergeViewers">
+    <viewer id="dk.sdu.mmmi.tjep.TJ.compare.contentMergeViewers"
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="tj" label="TJ Compare">
+     </viewer>
+  </extension>
+  <extension point="org.eclipse.ui.editors.documentProviders">
+    <provider id="dk.sdu.mmmi.tjep.TJ.editors.documentProviders"
+            class="dk.sdu.mmmi.tjep.ui.TJExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+            extensions="tj">
+    </provider>
+  </extension>
+
+</plugin>
