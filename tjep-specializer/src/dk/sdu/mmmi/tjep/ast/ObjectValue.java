@@ -45,7 +45,7 @@ public class ObjectValue extends Value {
 	}
 
 	public void setField(Env context, TField field, Value val) {
-		throw new Error("not implemented");
+		fields[field.getObjectIndex()] = val;
 	}
 
 	public Value getField(TField field) {

@@ -22,14 +22,39 @@ scenario HeapSimplePropagation {
 	int b; b = 87;
 }
 
+scenario HeapSimpleUpdate {
+	$Box@2 a;
+	$a = $new Box@2(87);
+	$a.value = ($a.value) $+ 1;
+	?int b;
+	?b = lift($a.value);
+} assert {
+	int b; b = 88;	
+}
+
+//
+// Speculative evaluation
+//
+scenario HeapDynamicConditional {
+	$Box@2 a;
+	$a = $new Box@2(87);
+	?int b;
+	?b = dynamic(int,input);
+	if(b) {
+		
+	} else {
+		
+	}
+}
+
 //
 // Heap values
 // 
-class Box@1 extends Object {
+class Box@1 extends Object { // Dynamic variant
 	int value;
 }
 
-class Box@2 extends Object {
+class Box@2 extends Object { // Static variant
 	$int value;
 }
 

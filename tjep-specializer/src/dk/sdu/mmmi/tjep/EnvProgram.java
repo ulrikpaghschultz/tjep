@@ -1,5 +1,7 @@
 package dk.sdu.mmmi.tjep;
 
+import dk.sdu.mmmi.tjep.ast.NumericValue;
+import dk.sdu.mmmi.tjep.ast.ObjectValue;
 import dk.sdu.mmmi.tjep.ast.Program;
 import dk.sdu.mmmi.tjep.ast.TClass;
 import dk.sdu.mmmi.tjep.ast.TExp;
@@ -37,7 +39,21 @@ public class EnvProgram {
 	}
 
 	public Value checkInstanceOfAndCast(TExp value, String typeName) {
-		throw new Error("not implemented");
+		if(typeName.equals("int")) {
+			if(value instanceof NumericValue) return (NumericValue)value;
+			else throw new Error("Value not an integer: "+value);
+		}
+		if(!(value instanceof ObjectValue)) throw new Error("Value not an object: "+value);
+		ObjectValue object = (ObjectValue)value;
+		if(!checkInstanceOf(object.getTypeName(),typeName)) throw new Error("Not an instanceof: "+typeName+", "+object);
+		return object;
+	}
+
+	public boolean checkInstanceOf(String objectType, String constraint) {
+		if(objectType.equals(constraint)) return true;
+		TClass clazz = findClass(objectType);
+		if(clazz.getName().equals(clazz.getSuperName())) return false; // means tehre is no superclass
+		return checkInstanceOf(clazz.getSuperName(),constraint);
 	}
 
 	public TClass findClass(String typeName) {

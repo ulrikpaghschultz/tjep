@@ -4,6 +4,7 @@ import dk.sdu.mmmi.tjep.Scenario;
 import power.PowerCube;
 import test_heap_intramethod.HeapObjectResidualization;
 import test_heap_intramethod.HeapSimplePropagation;
+import test_heap_intramethod.HeapSimpleUpdate;
 import test_intramethod.DynamicLoop;
 import test_intramethod.NestedDynamicConditional;
 import test_intramethod.NestedStaticConditional;
@@ -17,7 +18,7 @@ import test_intramethod.StaticLoopWithVar;
 public class HeapIntraMethodTests extends ScenarioTester {
 
 	private static Scenario[] scenarios = new Scenario[] { 
-		new HeapObjectResidualization(), new HeapSimplePropagation()
+		new HeapObjectResidualization(), new HeapSimplePropagation(), new HeapSimpleUpdate()
 		};
 	
 	public static void main(String argv[]) {

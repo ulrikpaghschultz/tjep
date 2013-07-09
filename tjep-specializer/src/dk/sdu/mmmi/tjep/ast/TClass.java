@@ -40,4 +40,8 @@ public class TClass extends TType {
 		return ff.toArray(new TField[0]);
 	}
 
+	public String getSuperName() {
+		return zuper;
+	}
+
 }
