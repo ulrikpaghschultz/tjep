@@ -3,6 +3,7 @@ package dk.sdu.mmmi.tjep.tests;
 import dk.sdu.mmmi.tjep.Scenario;
 import power.PowerCube;
 import test_heap_intramethod.HeapDynamicConditional;
+import test_heap_intramethod.HeapNestedDynamicConditional;
 import test_heap_intramethod.HeapObjectResidualization;
 import test_heap_intramethod.HeapSimplePropagation;
 import test_heap_intramethod.HeapSimpleUpdate;
@@ -20,7 +21,7 @@ public class HeapIntraMethodTests extends ScenarioTester {
 
 	private static Scenario[] scenarios = new Scenario[] { 
 		new HeapObjectResidualization(), new HeapSimplePropagation(), new HeapSimpleUpdate(),
-		new HeapDynamicConditional()
+		new HeapDynamicConditional(), new HeapNestedDynamicConditional()
 		};
 	
 	public static void main(String argv[]) {

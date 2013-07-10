@@ -55,6 +55,54 @@ scenario HeapDynamicConditional {
 	}
 }
 
+scenario HeapNestedDynamicConditional {
+	$Box@2 x; $x = $new Box@2(87);
+	$x.value = 1;
+	?int y; ?y = dynamic(int,input1);
+	?int z; ?z = dynamic(int,input2);
+	?if(?y) {
+		?if(?z) {
+			?y = lift(($x.value)$+1);
+			$x.value = ($x.value) $+ 10;
+			?z = lift(($x.value)$+($x.value));
+		} else {
+			?y = lift(($x.value)$+2);
+			$x.value = ($x.value) $+ 20;
+			?z = lift(($x.value)$+($x.value));
+		}
+	} else {
+		?if(?z) {
+			?y = lift(($x.value)$+3);
+			$x.value = ($x.value) $+ 30;
+			?z = lift(($x.value)$+($x.value));
+		} else {
+			?y = lift(($x.value)$+4);
+			$x.value = ($x.value) $+ 40;
+			?z = lift(($x.value)$+($x.value));
+		}
+	}
+} assert {
+	int y; y = dynamic(int,input1);
+	int z; z = dynamic(int,input2);
+	if(y) {
+		if(z) {
+			y = 2;
+			z = 22;
+		} else {
+			y = 3;
+			z = 42;
+		}
+	} else {
+		if(z) {
+			y = 4;
+			z = 62;
+		} else {
+			y = 5;
+			z = 82;
+		}
+	}
+}
+
 //
 // Heap values
 // 
