@@ -1,13 +1,17 @@
 package dk.sdu.mmmi.tjep.tests;
 
+import java.util.List;
+
 import dk.sdu.mmmi.tjep.Scenario;
 
-public class ScenarioTester {
+public abstract class ScenarioTester {
 
-	public void testScenarios(Scenario[] scen, boolean verbose) {
-		System.out.println("Beginning test");
-		for(int i=0; i<scen.length; i++) {
-			Scenario scenario = scen[i];
+	public abstract List<Scenario> getScenarios();
+	
+	public void testScenarios(boolean verbose) {
+		List<Scenario> scenarios = getScenarios();
+		System.out.println("Beginning test: "+this.getClass().getName());
+		for(Scenario scenario: scenarios) {
 			System.out.println("Scenario: "+scenario.getClass().getName());
 			scenario.specialize();
 			String assertResult = scenario.checkAssertion(verbose);

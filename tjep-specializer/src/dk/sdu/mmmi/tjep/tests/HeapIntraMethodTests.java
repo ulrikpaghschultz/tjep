@@ -1,5 +1,8 @@
 package dk.sdu.mmmi.tjep.tests;
 
+import java.util.Arrays;
+import java.util.List;
+
 import dk.sdu.mmmi.tjep.Scenario;
 import power.PowerCube;
 import test_heap_intramethod.HeapDynamicConditional;
@@ -25,7 +28,13 @@ public class HeapIntraMethodTests extends ScenarioTester {
 		};
 	
 	public static void main(String argv[]) {
-		new HeapIntraMethodTests().testScenarios(scenarios,false);
+		new HeapIntraMethodTests().testScenarios(false);
+	}
+
+	@Override
+	public List<Scenario> getScenarios() {
+		return Arrays.asList(scenarios);
 	}
 	
+
 }

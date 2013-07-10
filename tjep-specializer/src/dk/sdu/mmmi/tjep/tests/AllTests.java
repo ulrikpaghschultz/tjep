@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.tjep.tests;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,22 +16,18 @@ import test_intramethod.StaticConditional;
 import test_intramethod.StaticLoop;
 import test_intramethod.StaticLoopWithVar;
 
-public class IntraMethodTests extends ScenarioTester {
+public class AllTests extends ScenarioTester {
 
-	private static Scenario[] scenarios = new Scenario[] { 
-		new OneAddition(), new Propagation(), 
-		new StaticLoop(), new StaticLoopWithVar(), new DynamicLoop(),
-		new StaticConditional(), new NestedStaticConditional(), 
-		new SimpleDynamicConditional(), new NestedDynamicConditional()
-		};
-	
 	public static void main(String argv[]) {
-		new IntraMethodTests().testScenarios(false);
+		new AllTests().testScenarios(false);
 	}
 
 	@Override
 	public List<Scenario> getScenarios() {
-		return Arrays.asList(scenarios);
+		ArrayList<Scenario> all = new ArrayList<Scenario>();
+		all.addAll(new IntraMethodTests().getScenarios());
+		all.addAll(new HeapIntraMethodTests().getScenarios());
+		return all;
 	}
 	
 }
