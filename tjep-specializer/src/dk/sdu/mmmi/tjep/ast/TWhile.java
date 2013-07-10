@@ -50,7 +50,7 @@ public class TWhile extends TStatement {
 					residual.add(result.body[i]);
 			}
 		}
-		return residual.toArray(body);
+		return residual.toArray(new TStatement[0]);
 	}
 
 	private boolean evalCondition(Env env) {

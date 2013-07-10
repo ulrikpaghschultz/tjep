@@ -2,7 +2,7 @@ package test_intramethod;
 import dk.sdu.mmmi.tjep.BT;
 import dk.sdu.mmmi.tjep.Scenario;
 import dk.sdu.mmmi.tjep.ast.*;
-public class OneAddition extends Scenario {
+public class SimpleMethodsStaticData extends Scenario {
 	public TStatement[] getScenario() {
 		return new TStatement[] {
 			new TVarDecl(BT.S,"Box@1","box"),
@@ -22,7 +22,7 @@ public class OneAddition extends Scenario {
 		};
 	}
 	public Program getProgram() {
-		return new Program("OneAddition",
+		return new Program("SimpleMethodsStaticData",
 			this.getScenario(),
 new TType[] {
 new TClass("Box@1","Object",new TMember[] {

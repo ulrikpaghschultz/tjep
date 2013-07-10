@@ -1,0 +1,31 @@
+package test_intramethod;
+
+//
+// Simple methods, static data
+//
+scenario SimpleMethodsStaticData {
+	$Box@1 box;
+	$box = $new Box@1(87);
+	int a;
+	a = lift($box.get());
+	int b;
+	b = lift($box.add(1));
+} assert {
+	int a;
+	a = 87;
+	int b;
+	b = 88;
+}
+
+class Box@1 extends Object { // Static variant
+	$int value;
+	$int get() { $return $this.value; }
+	$int add($int x) { $int res; $res = ($this.value) $+ $x; $return $res; }
+}
+
+
+//
+// Auxiliary declarations
+//
+
+primitive int;

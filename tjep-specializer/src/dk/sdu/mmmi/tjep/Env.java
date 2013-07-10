@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.tjep;
 
+import dk.sdu.mmmi.tjep.ast.ObjectValue;
 import dk.sdu.mmmi.tjep.ast.Program;
 import dk.sdu.mmmi.tjep.ast.Value;
 
@@ -17,15 +18,15 @@ public class Env {
 		 helper_program = new EnvProgram(this,program);
 	}
 
-	public Env(Env context) {
-		helper_local = new EnvLocal(this,context.helper_local);
+	public Env(Env context, ObjectValue newSelfMaybe) {
+		helper_local = new EnvLocal(this,context.helper_local, newSelfMaybe);
 		helper_heap = context.helper_heap;
 		helper_spec = context.helper_spec;
 		helper_program = context.helper_program;
 	}
 
-	public Env nestedLocal() {
-		return new Env(this);
+	public Env nestedLocal(ObjectValue newSelfMaybe) {
+		return new Env(this, newSelfMaybe);
 	}
 	
 	private EnvLocal helper_local;

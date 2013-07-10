@@ -21,8 +21,14 @@ public class EnvProgram {
 		this.program = program;
 	}
 
-	public TMethod findMethod(String typeName, String name) {
-		throw new Error("Not implemented");
+	public TMethod findMethod(String typeName, String methodName) {
+		if(typeName==null) throw new Error("Null type for call to method "+methodName);
+		TType type = program.getType(typeName);
+		if(!(type instanceof TClass)) throw new Error("Illegal method type annotation: non-class type");
+		TClass clazz = (TClass)type;
+		TMember member = clazz.getMember(methodName);
+		if(!(member instanceof TMethod)) throw new Error("Method lookup of non-method member");
+		return (TMethod)member;
 	}
 
 	public Program getSourceProgram() {

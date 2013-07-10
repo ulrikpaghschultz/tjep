@@ -22,6 +22,21 @@ public class Propagation extends Scenario {
 		return new Program("Propagation",
 			this.getScenario(),
 new TType[] {
+new TClass("Box@1","Object",new TMember[] {
+	new TField(BT.S,false,"int","value"),
+	new TMethod(BT.S,"int","get",
+		new TParameter[] {  },
+		new TStatement[] {
+	  			new TReturn(BT.S,new TFieldRef(BT.S,new TThis(BT.S),"value"))
+		}),
+	new TMethod(BT.S,"int","add",
+		new TParameter[] { new TParameter(BT.S,"int","x") },
+		new TStatement[] {
+	  			new TVarDecl(BT.S,"int","res"),
+	  			new TLocalAssign(BT.S,"res",new TBinOp(BT.S,new TFieldRef(BT.S,new TThis(BT.S),"value"),"+",new TVarRef(BT.S,"x")))		,
+	  			new TReturn(BT.S,new TVarRef(BT.S,"res"))
+		})
+}),
 new TPrimitiveType("int")
 });
 	}

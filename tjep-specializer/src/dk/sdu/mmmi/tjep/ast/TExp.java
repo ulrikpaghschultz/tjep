@@ -34,7 +34,7 @@ public abstract class TExp {
 				result.add(exps[i]);
 			else if(bt==BT.D && !(exps[i] instanceof Value))
 				result.add(exps[i]);
-		return result.toArray(exps);
+		return result.toArray(new TExp[0]);
 	}
 
 	public TExp residualize() {

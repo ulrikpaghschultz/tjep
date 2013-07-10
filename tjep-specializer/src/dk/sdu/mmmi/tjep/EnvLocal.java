@@ -13,6 +13,7 @@ public class EnvLocal {
 
 	private Env env;
 	private EnvLocal enclosing;
+	private boolean lexicalNesting = false;
 	private Map<String,Value> locals = new HashMap<String,Value>();
 	private Stack<Map<String,Value>> saved = new Stack<Map<String, Value>>();
 	private ObjectValue self;
@@ -24,9 +25,16 @@ public class EnvLocal {
 	}
 	
 	// Create nested local environment
-	public EnvLocal(Env env, EnvLocal enclosing) {
+	public EnvLocal(Env env, EnvLocal enclosing, ObjectValue newSelf) {
 		this.env = env;
 		this.enclosing = enclosing;
+		if(newSelf==null) {
+			lexicalNesting = true;
+			self = enclosing.self;
+		} else {
+			lexicalNesting = false;
+			self = newSelf;
+		}
 	}
 
 	public Value lookupLocalVar(String name) {
@@ -42,8 +50,15 @@ public class EnvLocal {
 	}
 
 	public Env createLocalScope(ObjectValue self, TParameter[] parameters, TExp[] args) {
-		this.self = self;
-		throw new Error("Not implemented");		
+		Env newEnv = env.nestedLocal(self);
+		if(parameters.length!=args.length) throw new Error("Inconsistent parameter binding");
+		for(int i=0; i<parameters.length; i++) {
+			if(parameters[i].getBT()==BT.S) {
+				if(!(args[i] instanceof Value)) throw new Error("Illegal binding of static parameter to dynamic argument: "+parameters[i].getVarName()+" to "+args[i]);
+				newEnv.local().updateLocalVariable(parameters[i].getVarName(),(Value)args[i]);
+			}
+		}
+		return newEnv;
 	}
 
 	public void updateLocalVariable(String name, Value value) {
