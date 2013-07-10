@@ -12,11 +12,13 @@ import dk.sdu.mmmi.tjep.ast.TField;
 import dk.sdu.mmmi.tjep.ast.Value;
 
 public class EnvHeap {
-
+	
 	private Env context;
 	
 	// TODO: use weak refs where appropriate
 	private List<ObjectValue> heap = new ArrayList<ObjectValue>();
+	
+	private Stack<Map<ObjectValue,ObjectValue>> savedHeap = new Stack<Map<ObjectValue, ObjectValue>>();
 	
 	public EnvHeap(Env env) {
 		this.context = env;
@@ -41,11 +43,20 @@ public class EnvHeap {
 	}
 
 	public void save() {
-		if(heap.size()>0) throw new Error("Cannot save");
+		Map<ObjectValue,ObjectValue> save = new HashMap<ObjectValue, ObjectValue>();
+		for(ObjectValue obj: heap) save.put(obj,new ObjectValue()); 
+		for(ObjectValue obj: heap) save.get(obj).cloneFrom(obj);
+		savedHeap.push(save);
 	}
 
 	public void restore(boolean erase) {
-		; // heaps containing objects will not have been saved
+		Map<ObjectValue,ObjectValue> restore = savedHeap.peek();
+		for(ObjectValue obj: heap) {
+			ObjectValue clone = restore.get(obj);
+			if(clone==null) heap.remove(obj);
+			obj.cloneFrom(clone);
+		}
+		if(erase) savedHeap.pop();
 	}
 
 

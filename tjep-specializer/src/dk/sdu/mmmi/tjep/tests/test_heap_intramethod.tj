@@ -39,11 +39,19 @@ scenario HeapDynamicConditional {
 	$Box@2 a;
 	$a = $new Box@2(87);
 	?int b;
-	?b = dynamic(int,input);
-	if(b) {
-		
+	if(dynamic(int,input)) {
+		$a.value = ($a.value) $+ 1;
+		?b = lift($a.value);		
 	} else {
-		
+		$a.value = ($a.value) $- 1;
+		?b = lift($a.value);
+	}
+} assert {
+	int b;
+	if(dynamic(int,input)) {
+		b = 88;
+	} else {
+		b = 86;
 	}
 }
 

@@ -8,11 +8,26 @@ public class HeapDynamicConditional extends Scenario {
 			new TVarDecl(BT.S,"Box@2","a"),
 			new TLocalAssign(BT.S,"a",new TNew(BT.S,"Box@2",new TExp[] { new TConstant(87)}))		,
 			new TVarDecl(BT.D,"int","b"),
-			new TLocalAssign(BT.D,"b",new DynamicValue("int","input"))		,
 			new TConditional(BT.Bot,
-				new TVarRef(BT.Bot,"b"),
+				new DynamicValue("int","input"),
 				new TStatement[] {
+					new TFieldAssign(BT.S,"a","value",new TBinOp(BT.S,new TFieldRef(BT.S,"a","value"),"+",new TConstant(1)))		,
+					new TLocalAssign(BT.D,"b",new TLift(new TFieldRef(BT.S,"a","value")))		
 				}, new TStatement[] {
+					new TFieldAssign(BT.S,"a","value",new TBinOp(BT.S,new TFieldRef(BT.S,"a","value"),"-",new TConstant(1)))		,
+					new TLocalAssign(BT.D,"b",new TLift(new TFieldRef(BT.S,"a","value")))		
+				})
+		};
+	}
+	public TStatement[] getAssertion() {
+		return new TStatement[] {
+			new TVarDecl(BT.Bot,"int","b"),
+			new TConditional(BT.Bot,
+				new DynamicValue("int","input"),
+				new TStatement[] {
+					new TLocalAssign(BT.Bot,"b",new TConstant(88))		
+				}, new TStatement[] {
+					new TLocalAssign(BT.Bot,"b",new TConstant(86))		
 				})
 		};
 	}

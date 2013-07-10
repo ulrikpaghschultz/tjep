@@ -12,15 +12,22 @@ public class ObjectValue extends Value {
 	
 	public ObjectValue(Env env, String typeName, TExp[] exps) {
 		super();
+		initialize(typeName, exps);
+		env.heap().addObjectValue(typeName,this);
+	}
+
+	public void initialize(String typeName, TExp[] exps) {
 		this.typeName = typeName;
 		this.fields = new Value[exps.length];
 		for(int i=0; i<exps.length; i++)
 			this.fields[i] = value(exps[i],"object value argument");
-		env.heap().addObjectValue(typeName,this);
 	}
 
-	
-	
+	public ObjectValue() {
+		typeName = "NULL";
+		fields = new Value[0];
+	}
+
 	@Override
 	public TExp eval(Env env) {
 		return this;
@@ -50,6 +57,13 @@ public class ObjectValue extends Value {
 
 	public Value getField(TField field) {
 		return fields[field.getObjectIndex()];
+	}
+
+	public void cloneFrom(ObjectValue clone) {
+		Value[] newFields = new Value[clone.fields.length];
+		for(int i=0; i<clone.fields.length; i++)
+			newFields[i] = clone.fields[i];
+		initialize(clone.typeName, newFields);
 	}
 
 }
